@@ -1349,7 +1349,7 @@ def sample(model, params, prime, cache, x, start, end, rng):
             return x
 
         x = jax.vmap(update)(x, out)
-        return x, rng, vars["cache"].unfreeze()
+        return x, rng, vars["cache"]
 
     return jax.lax.fori_loop(start, end, jax.jit(loop), (x, rng, cache))[0]
 
@@ -1363,8 +1363,8 @@ def init_recurrence(model, params, init_x, rng):
     variables = model.init(rng, init_x)
     vars = {
         "params": params,
-        "cache": variables["cache"].unfreeze(),
-        "prime": variables["prime"].unfreeze(),
+        "cache": variables["cache"],
+        "prime": variables["prime"],
     }
     print("[*] Priming")
     _, prime_vars = model.apply(vars, init_x, mutable=["prime"])
@@ -1475,7 +1475,7 @@ def sample_image_prefix(
             cur[:, np.arange(0, START)],
             mutable=["cache"],
         )
-        cache = vars["cache"].unfreeze()
+        cache = vars["cache"]
         out = sample(model, params, prime, cache, cur, START, LENGTH - 1, rng)
 
         # Visualization
