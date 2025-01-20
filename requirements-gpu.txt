@@ -1,8 +1,8 @@
 jax
 jaxlib # If this fails, follow the official instructions: pip install --upgrade "jax[cuda]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 flax
-torch
-torchtext
+torch==2.3.0
+torchtext==0.18.0
 torchaudio
 torchvision
 jupytext
